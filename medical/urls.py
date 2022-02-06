@@ -20,6 +20,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
 from levels.views import LevelsListView
+from django.conf import settings
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -45,3 +46,10 @@ urlpatterns = [
     ),
     path(r'levels/', LevelsListView.as_view()),
 ]
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.STATIC_ROOT
+    )

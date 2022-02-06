@@ -1,10 +1,73 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Glucose levels</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+        input {
+          margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
+{% verbatim %}
+<h1>Table of glucose levels</h1>
+<h2>supports pagination and sorting</h2>
+<br>
+<p>to select ordering click on the column name</p>
+<div id="app">
+    <label for="name">Filter by user</label>
+    <input type="text" id="name" name="name" v-on:change="setUser">
+
+    <label for="name">Time start</label>
+    <input type="text" id="name" name="name" v-on:change="setTimeStart">
+
+    <label for="name">Time stop</label>
+    <input type="text" id="name" name="name" v-on:change="setTimeStop">
+
+    <br>
+
+    <label for="name">Page size</label>
+    <input type="text" id="name" name="name" v-on:change="setPageSize">
+
+    <label for="name">Page number</label>
+    <input type="text" id="name" name="name" v-on:change="setPageNum">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th v-on:click="setOrdering($event, `id`)">id</th>
+            <th v-on:click="setOrdering($event, `created_by`)">created by</th>
+            <th v-on:click="setOrdering($event, `recording_type`)">recording type</th>
+            <th v-on:click="setOrdering($event, `device`)">device serial number</th>
+            <th v-on:click="setOrdering($event, `device_timestamp`)">device timestamp</th>
+            <th v-on:click="setOrdering($event, `glucose_scan`)">glucose scan</th>
+            <th v-on:click="setOrdering($event, `glucose_value_history`)">glucose value history</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr v-for="item in items">
+            <td>{{ item.id }}</td>
+            <td>{{ item.created_by }}</td>
+            <td>{{ item.recording_type }}</td>
+            <td>{{ item.device }}</td>
+            <td>{{ item.device_timestamp }}</td>
+            <td>{{ item.glucose_scan }}</td>
+            <td>{{ item.glucose_value_history }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endverbatim %}
+
+<script src="{% static "main.js" %}"></script>
 
 </body>
 </html>
