@@ -1,0 +1,5 @@
+*.csv
+docker-compose.override.yml
+local_settings.py
+.idea/*
+__pycache__
